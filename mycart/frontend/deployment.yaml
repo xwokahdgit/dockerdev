@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mycart-frontend
+  namespace: mycart
+spec:
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: mycart
+      layer: frontend
+  replicas: 2
+  revisionHistoryLimit: 5
+  template: 
+    metadata:
+      labels:
+        app: mycart
+        layer: frontend
+    spec:
+      containers:
+      - name: mycart-frontend-container
+        image: xwokahd/myapp-frontend:2.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "1"
+            memory: "500Mi"
+          requests:
+            cpu: "0.5"
+            memory: "200Mi"
